@@ -1,0 +1,3 @@
+workflow,mapping,session,target_model,load_type,watermark_column,business_owner,status
+WF_VARANASI_ORDERS,M_VARANASI_ORDERS,S_VARANASI_ORDERS,fct_varanasi_orders,incremental,updated_at,Y,discovery
+

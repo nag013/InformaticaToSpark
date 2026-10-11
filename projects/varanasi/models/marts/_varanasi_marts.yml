@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: fct_varanasi_orders
+    description: Varanasi order fact.
+    columns:
+      - name: order_key
+        tests: [not_null, unique]
+      - name: order_id
+        tests: [not_null, unique]
+
+  - name: varanasi_customer_order_summary
+    description: Varanasi customer-level order aggregation.
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+

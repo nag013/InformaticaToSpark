@@ -1,0 +1,23 @@
+version: 2
+
+sources:
+  - name: rrr_raw
+    description: RRR landing tables populated by ingestion jobs replacing Informatica extraction.
+    catalog: "{{ env_var('DBT_RAW_CATALOG', env_var('DBT_CATALOG')) }}"
+    schema: "{{ env_var('RRR_RAW_SCHEMA', 'rrr_raw') }}"
+    loaded_at_field: updated_at
+    freshness:
+      warn_after: {count: 2, period: hour}
+      error_after: {count: 4, period: hour}
+    tables:
+      - name: customers
+        description: Raw customer master extract.
+        columns:
+          - name: customer_id
+            tests: [not_null]
+      - name: orders
+        description: Raw order transaction extract.
+        columns:
+          - name: order_id
+            tests: [not_null]
+

@@ -1,0 +1,15 @@
+selectors:
+  - name: daily_curation
+    description: RRR daily marts and all required upstream dependencies.
+    definition:
+      method: tag
+      value: daily
+      parents: true
+
+  - name: full_curation
+    description: All RRR curated models and their upstream dependencies.
+    definition:
+      method: tag
+      value: curation
+      parents: true
+

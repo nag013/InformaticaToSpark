@@ -1,0 +1,62 @@
+{
+  "staging": [
+    {
+      "name": "stg_orders",
+      "source": {
+        "path": "s3://example-raw/orders",
+        "fmt": "parquet"
+      },
+      "target": {
+        "path": "s3://example-stage/orders",
+        "fmt": "delta"
+      },
+      "load_type": "append",
+      "watermark_column": "updated_at",
+      "options": {
+        "last_watermark": "2026-01-01T00:00:00Z",
+        "audit_columns": {
+          "etl_loaded_at": "current_timestamp()"
+        }
+      }
+    }
+  ],
+  "dimensions": [
+    {
+      "name": "dim_customer",
+      "source": {
+        "path": "s3://example-stage/customers",
+        "fmt": "delta"
+      },
+      "target": {
+        "path": "s3://example-curated/dim_customer",
+        "fmt": "delta"
+      },
+      "load_type": "scd2",
+      "primary_keys": ["customer_id"],
+      "watermark_column": "updated_at",
+      "options": {
+        "last_watermark": "2026-01-01T00:00:00Z"
+      }
+    }
+  ],
+  "facts": [
+    {
+      "name": "fact_sales",
+      "source": {
+        "path": "s3://example-stage/orders",
+        "fmt": "delta"
+      },
+      "target": {
+        "path": "s3://example-curated/fact_sales",
+        "fmt": "delta"
+      },
+      "load_type": "append",
+      "primary_keys": ["order_id"],
+      "watermark_column": "updated_at",
+      "options": {
+        "last_watermark": "2026-01-01T00:00:00Z"
+      }
+    }
+  ]
+}
+

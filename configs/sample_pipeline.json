@@ -1,0 +1,24 @@
+{
+  "name": "orders_incremental_to_delta",
+  "source": {
+    "path": "s3://example-raw/orders",
+    "fmt": "parquet"
+  },
+  "target": {
+    "path": "s3://example-curated/orders",
+    "fmt": "delta",
+    "options": {
+      "mergeSchema": "true"
+    }
+  },
+  "load_type": "append",
+  "primary_keys": ["order_id"],
+  "watermark_column": "updated_at",
+  "options": {
+    "last_watermark": "2026-01-01T00:00:00Z",
+    "audit_columns": {
+      "etl_loaded_at": "current_timestamp()"
+    }
+  }
+}
+

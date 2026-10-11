@@ -1,0 +1,46 @@
+name: rrr
+version: 1.0.0
+config-version: 2
+
+profile: informatica_transition
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests_dbt"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - target
+  - dbt_packages
+
+models:
+  rrr:
+    +tags: ["rrr"]
+    +persist_docs:
+      relation: true
+      columns: true
+    staging:
+      +materialized: view
+      +schema: staging
+      +tags: ["staging"]
+    intermediate:
+      +materialized: ephemeral
+      +tags: ["intermediate"]
+    marts:
+      +materialized: table
+      +schema: marts
+      +tags: ["curation"]
+
+seeds:
+  rrr:
+    +schema: reference
+
+snapshots:
+  rrr:
+    +target_schema: snapshots
+
+vars:
+  load_start_date: '1900-01-01'
+

@@ -1,0 +1,25 @@
+informatica_transition:
+  target: dev
+  outputs:
+    dev:
+      # Replace with the adapter for your target warehouse, then install it.
+      # This example uses Databricks because the existing ETL framework is Spark-oriented.
+      type: databricks
+      catalog: "{{ env_var('DBT_CATALOG') }}"
+      # A developer-specific base schema is recommended. Project folder configs
+      # add RRR/Varanasi-specific suffixes for physical models.
+      schema: "{{ env_var('DBT_SCHEMA', 'analytics_dev') }}"
+      host: "{{ env_var('DBT_HOST') }}"
+      http_path: "{{ env_var('DBT_HTTP_PATH') }}"
+      token: "{{ env_var('DBT_TOKEN') }}"
+      threads: 4
+
+    prod:
+      type: databricks
+      catalog: "{{ env_var('DBT_CATALOG') }}"
+      schema: "{{ env_var('DBT_SCHEMA', 'analytics') }}"
+      host: "{{ env_var('DBT_HOST') }}"
+      http_path: "{{ env_var('DBT_HTTP_PATH') }}"
+      token: "{{ env_var('DBT_TOKEN') }}"
+      threads: 8
+

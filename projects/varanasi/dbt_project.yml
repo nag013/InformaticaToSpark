@@ -1,0 +1,46 @@
+name: varanasi
+version: 1.0.0
+config-version: 2
+
+profile: informatica_transition
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - target
+  - dbt_packages
+
+models:
+  varanasi:
+    +tags: ["varanasi"]
+    +persist_docs:
+      relation: true
+      columns: true
+    staging:
+      +materialized: view
+      +schema: varanasi_staging
+      +tags: ["staging"]
+    intermediate:
+      +materialized: ephemeral
+      +tags: ["intermediate"]
+    marts:
+      +materialized: table
+      +schema: varanasi_marts
+      +tags: ["curation"]
+
+seeds:
+  varanasi:
+    +schema: varanasi_reference
+
+snapshots:
+  varanasi:
+    +target_schema: varanasi_snapshots
+
+vars:
+  load_start_date: '1900-01-01'
+

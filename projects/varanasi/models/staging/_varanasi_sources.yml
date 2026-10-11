@@ -1,0 +1,21 @@
+version: 2
+
+sources:
+  - name: varanasi_raw
+    description: Varanasi landing tables populated by the ingestion process.
+    catalog: "{{ env_var('DBT_RAW_CATALOG', env_var('DBT_CATALOG')) }}"
+    schema: "{{ env_var('VARANASI_RAW_SCHEMA', 'varanasi_raw') }}"
+    loaded_at_field: updated_at
+    freshness:
+      warn_after: {count: 2, period: hour}
+      error_after: {count: 4, period: hour}
+    tables:
+      - name: customers
+        columns:
+          - name: customer_id
+            tests: [not_null]
+      - name: orders
+        columns:
+          - name: order_id
+            tests: [not_null]
+

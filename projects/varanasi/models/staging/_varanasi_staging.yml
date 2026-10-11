@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: stg_varanasi__customers
+    description: Cleaned Varanasi customer records.
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+      - name: email
+        tests: [not_null]
+
+  - name: stg_varanasi__orders
+    description: Incrementally loaded Varanasi orders.
+    columns:
+      - name: order_id
+        tests: [not_null, unique]
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('stg_varanasi__customers')
+              field: customer_id
+      - name: amount
+        tests: [not_null, non_negative]
+      - name: order_status
+        tests:
+          - accepted_values:
+              values: ['NEW', 'PROCESSING', 'COMPLETE', 'CANCELLED']
+

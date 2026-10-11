@@ -1,0 +1,5 @@
+# Install with the constraints file matching your Python and Airflow versions.
+# See airflow/README.md before installation.
+apache-airflow>=2.8,<3.0
+dbt-databricks>=1.8,<2.0
+

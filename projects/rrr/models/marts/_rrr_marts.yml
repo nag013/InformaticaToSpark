@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: fct_rrr_orders
+    description: Order fact replacing the final Informatica target load.
+    columns:
+      - name: order_key
+        tests: [not_null, unique]
+      - name: order_id
+        tests: [not_null, unique]
+
+  - name: rrr_customer_order_summary
+    description: Customer-level order aggregation.
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+

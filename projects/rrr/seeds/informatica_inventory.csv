@@ -1,0 +1,3 @@
+workflow,mapping,session,target_model,load_type,watermark_column,business_owner,status
+WF_RRR_ORDERS,M_RRR_ORDERS,S_RRR_ORDERS,fct_rrr_orders,incremental,updated_at,X,discovery
+
